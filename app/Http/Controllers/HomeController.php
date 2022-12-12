@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Winner;
+use App\Models\Luckynumber;
 
 class HomeController extends Controller
 {
@@ -27,9 +29,14 @@ class HomeController extends Controller
     {
 
         $tickets=Ticket::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
+        $lucky=Winner::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        $current=Luckynumber::orderBy('id', 'desc')->first();
 
+    
         return view('home', [
-            'tickets'=> $tickets
+            'tickets'=> $tickets,
+            'lucky'=>$lucky,
+            'current'=>$current
         ]);
     }
 

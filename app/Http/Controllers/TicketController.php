@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Luckynumber;
 
 class TicketController extends Controller
 {
@@ -18,7 +19,6 @@ class TicketController extends Controller
     public function store(Request $request)
     {
     
-
         $validator = Validator::make($request->all(),[
             'numbers' => 'required|array|min:6|max:6',
 
@@ -29,10 +29,15 @@ class TicketController extends Controller
             return back()->with('error', 'Please choose 6 numbers. It is required.'); 
         }else{
 
-            $input = $request->all();
-            $input['user_id']=Auth::id();
-            $input['numbers'] = $request->input('numbers');
-            Ticket::create($input);
+
+            $last=Luckynumber::orderBy('id', 'desc')->first();
+            $round=$last->round_id;
+
+            $ticket=new Ticket();
+            $ticket->user_id=Auth::id();
+            $ticket->round_id=$round+1;
+            $ticket->numbers=$request->numbers;
+            $ticket->save();
 
             return redirect('/home')->with('message', 'Successfully created ticket'); 
         }

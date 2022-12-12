@@ -34,6 +34,17 @@
             </div>
             <br>
             <div class="card">
+            <div class="card-header">Current round</div>
+            <div class="card-body">
+
+            @foreach($current['numbers'] as $num)
+               <span style="background: #C6F0DD"> {{ $num }} </span>
+            @endforeach
+            </div>
+            </div>
+            <br>
+
+            <div class="card">
             <div class="card-header">Your tickets</div>
 
                 @include('user.ticket.usertickets')

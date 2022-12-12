@@ -13,9 +13,20 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
+
+     protected $commands=[
+
+        \App\Console\Commands\GetLuckyNumbers::class,
+
+    ];
+
+
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('command:getluckynumbers')->everyFiveMinutes()->withoutOverlapping()->onOneServer();
+
     }
 
     /**
