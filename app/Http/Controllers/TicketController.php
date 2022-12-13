@@ -31,7 +31,13 @@ class TicketController extends Controller
 
 
             $last=Luckynumber::orderBy('id', 'desc')->first();
-            $round=$last->round_id;
+            $round=0;
+            if($last==null){
+                $round=0;
+            }else{
+                $round=$last->round_id;
+
+            }
 
             $ticket=new Ticket();
             $ticket->user_id=Auth::id();

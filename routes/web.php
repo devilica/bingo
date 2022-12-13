@@ -18,21 +18,25 @@ Route::get('/', function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function(){
+        Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/create/ticket', 'TicketController@create');
-Route::post('/store/ticket', 'TicketController@store');
+        Route::get('/create/ticket', 'TicketController@create');
+        Route::post('/store/ticket', 'TicketController@store');
 
 
 
-Route::prefix('admin')
-    ->as('admin.')
-    ->group(function() {
-        Route::get('/home', 'Admin\AdminController@index')->name('home');
-Route::namespace('Auth\Login')
-      ->group(function() {
-       Route::get('login', 'AdminController@showLoginForm')->name('login');
-    Route::post('login', 'AdminController@login')->name('login');
-    Route::post('logout', 'AdminController@logout')->name('logout');
-      });
- });
+
+        Route::prefix('admin')
+            ->as('admin.')
+            ->group(function() {
+                Route::get('/home', 'Admin\AdminController@index')->name('home');
+        Route::namespace('Auth\Login')
+            ->group(function() {
+            Route::get('login', 'AdminController@showLoginForm')->name('login');
+            Route::post('login', 'AdminController@login')->name('login');
+            Route::post('logout', 'AdminController@logout')->name('logout');
+            });
+        });
+
+});
