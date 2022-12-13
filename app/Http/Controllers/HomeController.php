@@ -31,8 +31,7 @@ class HomeController extends Controller
         $tickets=Ticket::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
         $lucky=Winner::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         $current=Luckynumber::orderBy('id', 'desc')->first();
-
-    
+        
         return view('home', [
             'tickets'=> $tickets,
             'lucky'=>$lucky,

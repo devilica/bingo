@@ -37,9 +37,11 @@
             <div class="card-header">Current round</div>
             <div class="card-body">
 
+            @if($current!=null)
             @foreach($current['numbers'] as $num)
                <span style="background: #C6F0DD"> {{ $num }} </span>
             @endforeach
+            @endif
             </div>
             </div>
             <br>
